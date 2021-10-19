@@ -4,12 +4,13 @@ set -e  # if a command fails it stops the execution
 set -u  # script fails if trying to access to an undefined variable
 
 echo "Starts release $RELEASE_VERSION"
+
 SOURCE_DIRECTORY="$1"
 DESTINATION_REPOSITORY="$2"
-USER_NAME="$4"
-USER_EMAIL="$3"
-TARGET_BRANCH="$5"
-COMMIT_MESSAGE="$6"
+DESTINATION_REPOSITORY_USERNAME="$3"
+USER_EMAIL="$4"
+USER_NAME="$5"
+TARGET_BRANCH="$6"
 
 CLONE_DIR=$(mktemp -d)
 
@@ -17,7 +18,7 @@ echo "Cloning destination git repository"
 # Setup git
 git config --global user.email "$USER_EMAIL"
 git config --global user.name "$USER_NAME"
-git clone --single-branch --branch "$TARGET_BRANCH" "https://$USER_NAME:$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY.git" "$CLONE_DIR"
+git clone --single-branch --branch "$TARGET_BRANCH" "https://$DESTINATION_REPOSITORY_USERNAME:$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY.git" "$CLONE_DIR"
 ls -la "$CLONE_DIR"
 
 TARGET_DIR=$(mktemp -d)
@@ -52,6 +53,6 @@ git tag -a $RELEASE_VERSION -m "release $RELEASE_VERSION"
 
 echo "git push origin:"
 # --set-upstream: sets de branch when pushing to a branch that does not exist
-git push "https://$USER_NAME:$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY.git"  --follow-tags --set-upstream "$TARGET_BRANCH"
+git push "https://$DESTINATION_REPOSITORY_USERNAME:$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY.git"  --follow-tags --set-upstream "$TARGET_BRANCH"
 
 echo "$RELEASE_VERSION is released!"
