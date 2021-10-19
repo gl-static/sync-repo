@@ -3,7 +3,7 @@
 set -e  # if a command fails it stops the execution
 set -u  # script fails if trying to access to an undefined variable
 
-echo "Starts release $U3_RELEASE_VERSION"
+echo "Starts release $RELEASE_VERSION"
 
 SOURCE_DIRECTORY="$1"
 DESTINATION_REPOSITORY="$2"
@@ -48,11 +48,11 @@ echo "--- Status"
 git status
 
 echo "--- Commit"
-git commit --message "release $U3_RELEASE_VERSION"
+git commit --message "release $RELEASE_VERSION"
 git log
 
 echo "--- Tag"
-git tag -a $U3_RELEASE_VERSION -m "release $U3_RELEASE_VERSION"
+git tag -a $RELEASE_VERSION -m "release $RELEASE_VERSION"
 git describe
 
 echo "git push origin"
