@@ -41,18 +41,24 @@ cd "$TARGET_DIR"
 echo "Files that will be pushed:"
 ls -la
 
-echo "git add:"
+echo "--- Add"
 git add .
 
-echo "git status:"
+echo "--- Status"
 git status
 
-echo "git commit:"
+echo "--- Commit"
 git commit --message "release $RELEASE_VERSION"
-git tag -a $RELEASE_VERSION -m "release $RELEASE_VERSION"
+git log
 
-echo "git push origin:"
+echo "--- Tag"
+git tag -a $RELEASE_VERSION -m "release $RELEASE_VERSION"
+git describe
+
+echo "git push origin"
+git push --follow-tags -u origin HEAD:$TARGET_BRANCH
+
 # --set-upstream: sets de branch when pushing to a branch that does not exist
-git push "https://$DESTINATION_REPOSITORY_USERNAME:$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY.git"  --follow-tags --set-upstream "$TARGET_BRANCH"
+# git push  "https://$DESTINATION_REPOSITORY_USERNAME:$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY.git"  "$TARGET_BRANCH"
 
 echo "$RELEASE_VERSION is released!"
