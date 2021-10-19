@@ -41,16 +41,12 @@ cd "$TARGET_DIR"
 echo "Files that will be pushed:"
 ls -la
 
-echo "--- Add"
 git add .
-
-echo "--- Commit"
 git commit -m "release $RELEASE_VERSION"
-git log
-
-echo "--- Tag"
 git tag -a $RELEASE_VERSION -m "release $RELEASE_VERSION"
 git describe
+
+git log -1
 
 echo "git push origin"
 git push --follow-tags -u origin $TARGET_BRANCH
