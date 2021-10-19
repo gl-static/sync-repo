@@ -49,7 +49,8 @@ git describe
 git log -1
 
 echo "git push origin"
-git push --follow-tags -u origin $TARGET_BRANCH
+git checkout $TARGET_BRANCH
+git push --follow-tags origin $TARGET_BRANCH
 
 # --set-upstream: sets de branch when pushing to a branch that does not exist
 # git push  "https://$DESTINATION_REPOSITORY_USERNAME:$API_TOKEN_GITHUB@github.com/$DESTINATION_REPOSITORY.git"  "$TARGET_BRANCH"
