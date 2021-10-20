@@ -44,7 +44,7 @@ ls -la
 git add .
 git commit -m "release $RELEASE_VERSION"
 git tag -a $RELEASE_VERSION -m "release $RELEASE_VERSION"
-git describe
+# git describe
 
 git log -1
 
